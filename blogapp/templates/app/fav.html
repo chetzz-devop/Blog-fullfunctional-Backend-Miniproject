@@ -1,0 +1,27 @@
+<h1>My Favourite Blogs</h1>
+
+<hr />
+
+<a href="{% url 'displaypage' %}">Home</a>
+
+<hr />
+
+{% for i in favblog %}
+
+<div>
+  <img src="{{ i.blog.img }}" width="200" />
+
+  <h3>{{ i.blog.title }}</h3>
+  <a href="{% url 'deletefav' i.id %}">delete</a>
+  <p>{{ i.blog.desc|truncatewords:20 }}</p>
+
+  <a href="{% url 'readmore' i.blog.id %}">Read More</a>
+</div>
+
+<hr />
+
+{% empty %}
+
+<h3>No Favourite Blogs Yet</h3>
+
+{% endfor %}

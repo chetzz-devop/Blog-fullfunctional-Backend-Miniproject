@@ -1,0 +1,30 @@
+<h1>{{ readblog.title }}</h1>
+
+<hr />
+
+<a href="{% url 'displaypage' %}">Home</a>
+
+<a href="{% url 'createblog' %}">Create Blog</a>
+
+{% if user.is_authenticated %}
+
+<form action="{% url 'logout' %}" method="POST" style="display: inline">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+{% else %}
+
+<a href="{% url 'login' %}">Login</a>
+
+<a href="{% url 'signup' %}">Signup</a>
+
+{% endif %}
+<img src="{{ readblog.img }}" width="300" />
+
+<p>{{ readblog.desc }}</p>
+<p>Want to buy{{readblog.price}}</p>
+
+<p>Created By: {{ readblog.author }}$</p>
+
+<a href="{% url 'displaypage' %}">Back</a>

@@ -1,0 +1,33 @@
+<h1>Create Blog</h1>
+<hr />
+<hr />
+
+<a href="{% url 'displaypage' %}">Home</a>
+
+<a href="{% url 'createblog' %}">Create Blog</a>
+
+{% if user.is_authenticated %}
+
+<form action="{% url 'logout' %}" method="POST" style="display: inline">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+{% else %}
+
+<a href="{% url 'login' %}">Login</a>
+
+<a href="{% url 'signup' %}">Signup</a>
+
+{% endif %}
+</hr>
+
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+
+  <button type="submit">Create Blog</button>
+</form>
+
+<br />
+
+<a href="{% url 'displaypage' %}">Back Home</a>

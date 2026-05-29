@@ -1,0 +1,63 @@
+<h1>MyBlog</h1>
+
+<hr />
+
+<p>hi {{ user.username }}</p>
+
+<a href="{% url 'displaypage' %}">Home</a>
+
+<a href="{% url 'createblog' %}">Create Blog</a>
+
+{% if user.is_authenticated %}
+
+<form action="{% url 'logout' %}" method="POST" style="display: inline">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+{% else %}
+
+<a href="{% url 'login' %}">Login</a>
+
+<a href="{% url 'signup' %}">Signup</a>
+
+{% endif %}
+
+<hr />
+
+<h2>Latest Blogs</h2>
+
+{% for i in displayblog %}
+
+<div>
+  <img src="{{ i.img }}" width="200" />
+
+  <h3>{{ i.title }}</h3>
+
+  <p>{{ i.desc|truncatewords:20 }}</p>
+
+  {% if user.is_authenticated %}
+
+  <!-- ✅ FIXED FAV PART -->
+  <form method="POST" action="{% url 'favblog' %}">
+    {% csrf_token %}
+    <input type="hidden" name="fav" value="{{ i.id }}" />
+    <button type="submit">Add To Fav ❤️</button>
+  </form>
+
+  {% endif %}
+
+  <a href="{% url 'readmore' i.id %}">Read More</a>
+
+  {% if user.is_authenticated %}
+
+  <a href="{% url 'editblog' i.id %}">Edit</a>
+
+  <a href="{% url 'deleteblog' i.id %}">Delete</a>
+
+  {% endif %}
+</div>
+
+<hr />
+
+{% endfor %}
